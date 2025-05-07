@@ -4,11 +4,19 @@ class SpriteSheet:
     def __init__(self, image):
         self.sheet = image
 
-    def get_image(self, frame, width, height, scale):
+    def get_image(self, frame, collumns, width, height, scale, color):
 
-        image = py.Surface((width, height))
-        image.blit(self.sheet, (0, 0), ((frame * width), 0, width, height))
+        collumn = frame
+        row = 0
+
+        if frame >=  collumns:
+            collumn = 0 + (frame - collumns)
+            row += 1
+
+        image = py.Surface(size = (width, height))
+        image.fill(color)
+        image.blit(self.sheet, (0, 0), ((collumn * width), (row * height), width, height))
         image = py.transform.scale(image, (width * scale, height * scale))
-        image.set_colorkey((0, 0, 0))
+        image.set_colorkey(color)
 
         return image
