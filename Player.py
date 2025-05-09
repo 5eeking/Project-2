@@ -1,5 +1,4 @@
 ### File to create the player ###
-# TODO: ADD DOCSTRINGS AND COMMENTS.
 
 # NOTE: Import Section
 # Imports required modules for the file
@@ -9,10 +8,24 @@ from HealthBar import HealthBar
 import math
 import os
 
+# Player class to create player entities.
 class Player:
     ANIMATION_COOLDOWN = 175
     def __init__(self, x, y, width, height, health, damage, points) -> None:
+        """
+        Initializes the required variables and sprites for the player.
+        Parameters:
+            x: x position of the player.
+            y: y position of the player.
+            width: width of the player.
+            height: height of the player.
+            health: health of the player.
+            damage: damage the player does.
+            points: points for the player.
+        """
+
         # NOTE: Player/Animation Initializer
+        # Initializes the variables for the player that let it interact in the game.
         self.x = x
         self.y = y
         self.width = width
@@ -26,6 +39,7 @@ class Player:
         py.font.init()
         self.font = py.font.SysFont('Arial', 36)
 
+        # Initializes the animation of the player sprite.
         self.sprite_sheet_image = py.image.load(f"sprites{os.sep}base_character.png").convert_alpha()
         self.sprite_sheet = SpriteSheet(self.sprite_sheet_image)
         self.animation_list = []
@@ -43,10 +57,17 @@ class Player:
             self.animation_list.append(temp_list)
         self.animation_list[3] = [py.transform.flip(self.animation_list[2][x], True, False) for x in range(len(self.animation_list[2]))]
 
-    # Decreases health and checks if the player has no health and returns whether the player is dead or not
     def player_damage(self, amount) -> bool:
+        """
+        Decreases the player health depending on the enemy and the players protection stat.
+        Parameters:
+            amount: amount of damage the player takes.
+        Returns:
+             bool: True or false depending on the players death.
+        """
 
         # NOTE: Player Damaging and Death Section
+        # Damages the player and determines the death of the player.
         self.health = self.health - (amount - self.protection) if amount - self.protection > 0 else self.health
         if self.health <= 0:
             print(f'\nYOU DIED WITH A SCORE OF {self.points}')
@@ -55,13 +76,27 @@ class Player:
             return True
 
     def get_player_pos(self) -> tuple:
+        """
+        Returns the current position of the player.
+        Returns:
+            tuple: The position of the player.
+        """
 
         # NOTE: Player Position Return Section
+        # Returns the players position.
         return self.x, self.y
 
     def update(self, display) -> None:
+        """
+        Updates the players animation and displays it.
+        Parameters:
+            display: pygame display object.
+        Returns:
+            None
+        """
 
         # NOTE: Cycles and Displays Animation Section
+        # Displays the player, health bar, and point text on the screen.
         current_time = py.time.get_ticks()
         if current_time - self.last_update > self.ANIMATION_COOLDOWN:
             self.frame += 1
@@ -73,10 +108,21 @@ class Player:
         counter_surface = self.font.render(f'Score: {self.points}', True, 'black')
         display.blit(counter_surface, (display.get_width() / 2, 5))
 
+# Gun class to create the gun object.
 class Gun:
     def __init__(self, x, y, width, height, shot) -> None:
+        """
+        Initializes the guns required variables and sprite.
+        Parameters:
+            x: x position of the gun.
+            y: y position of the gun.
+            width: width of the gun.
+            height: height of the gun.
+            shot: whether the gun was shot or not.
+        """
 
         # NOTE: Gun Initializer
+        # Initializes the gun variables and the sprite of the gun.
         self.x = x
         self.y = y
         self.width = width
@@ -85,8 +131,17 @@ class Gun:
         self.gun_sprite = SpriteSheet(py.image.load(f"sprites{os.sep}gun.png").convert_alpha()).get_image(0, 1, self.width, self.height, 1, (0, 255, 0))
 
     def update(self, display, player_pos) -> None:
+        """
+        Updates the guns position around the player and displays it.
+        Parameters:
+            display: pygame display object.
+            player_pos: the players position.
+        Returns:
+            None
+        """
 
         # NOTE: Gun Rotation and Display Section
+        # Updates the guns position and displays it.
         mouse_pos = py.mouse.get_pos()
         x_pos, y_pos = mouse_pos[0] - player_pos[0], -(mouse_pos[1] - player_pos[1])
         angle = math.degrees(math.atan2(y_pos, x_pos))
@@ -94,10 +149,21 @@ class Gun:
         gun_rect = gun.get_rect(center = (self.x, self.y))
         display.blit(gun, gun_rect)
 
+# Bullet class to create bullet objects.
 class Bullet:
     def __init__(self, x, y, width, height, unit_vector) -> None:
+        """
+        Initializes the bullets required variables and sprite.
+        Parameters:
+            x: x position of the bullet.
+            y: y position of the bullet.
+            width: width of the bullet.
+            height: height of the bullet.
+            unit_vector: unit vector of the bullet (Also known as speed and direction).
+        """
 
         # NOTE: Bullet Initializer
+        # Initializes the bullets variables and sprite.
         self.x = x
         self.y = y
         self.width = width
@@ -108,12 +174,26 @@ class Bullet:
                                                                                                            (0, 255, 0))
 
     def get_bullet_pos(self) -> tuple:
+        """
+        Returns the current position of the bullet.
+        Returns:
+            tuple: The position of the bullet.
+        """
 
         # NOTE: Bullet Position Return Section
+        # Returns the current position of the bullet.
         return self.x, self.y
 
     def update(self, display) -> None:
+        """
+        Updates the bullet position and displays it.
+        Parameters:
+            display: pygame display object.
+        Returns:
+            None
+        """
 
         # NOTE: Bullet Movement and Display Section
+        # Updates the bullet position and displays it.
         display.blit(self.bullet_sprite, (self.x - 64, self.y - 64))
         self.x, self.y = self.x + self.unit_vector[0] * 2, self.y + self.unit_vector[1] * 2
