@@ -104,25 +104,26 @@ class Game:
             self.player.action = get_direction(self.player.get_player_pos(), mouse_pos)
             diagonal_speed = 0.8
             default_speed = 1
+            round_speed = (self.round / 3)
 
             # Moves the "Player" when the WASD keys are pressed.
             if keys[py.K_a] and keys[py.K_s]:
-                self.move(x_move = -diagonal_speed * (self.round / 3), y_move = diagonal_speed * (self.round / 3))
+                self.move(x_move = (-diagonal_speed * round_speed) - diagonal_speed, y_move = (diagonal_speed * round_speed) + diagonal_speed)
             elif keys[py.K_a] and keys[py.K_w]:
-                self.move(x_move = -diagonal_speed * (self.round / 3), y_move = -diagonal_speed * (self.round / 3))
+                self.move(x_move = (-diagonal_speed * round_speed) - diagonal_speed, y_move = (-diagonal_speed * round_speed) - diagonal_speed)
             elif keys[py.K_d] and keys[py.K_s]:
-                self.move(x_move = diagonal_speed * (self.round / 3), y_move = diagonal_speed * (self.round / 3))
+                self.move(x_move = (diagonal_speed * round_speed) + diagonal_speed, y_move = (diagonal_speed * round_speed) + diagonal_speed)
             elif keys[py.K_d] and keys[py.K_w]:
-                self.move(x_move = diagonal_speed * (self.round / 3), y_move = -diagonal_speed * (self.round / 3))
+                self.move(x_move = (diagonal_speed * round_speed) + diagonal_speed, y_move = (-diagonal_speed * round_speed) - diagonal_speed)
             else:
                 if keys[py.K_a]:
-                    self.move(x_move = -default_speed * (self.round / 3))
+                    self.move(x_move = (-default_speed * round_speed) - default_speed)
                 if keys[py.K_d]:
-                    self.move(x_move = default_speed * (self.round / 3))
+                    self.move(x_move = (default_speed * round_speed) + default_speed)
                 if keys[py.K_w]:
-                    self.move(y_move = -default_speed * (self.round / 3))
+                    self.move(y_move = (-default_speed * round_speed) - default_speed)
                 if keys[py.K_s]:
-                    self.move(y_move = default_speed * (self.round / 3))
+                    self.move(y_move = (default_speed * round_speed) + default_speed)
 
             # NOTE: Bullet Spawn Section
             # Creates a bullet when the mouse button is pressed and appends it to bullets list, and stops it from shooting a ton of bullets
@@ -173,11 +174,11 @@ class Game:
                     # Chooses a random enemy to spawn and creates an object for it
                     rand_num = rand.randint(1, 3)
                     temp_enemy = None
-                    if rand_num == 1: temp_enemy = Enemy(0, 0, 1 * (self.round / 3), 128, 128, "Monster", 40 * (self.round / 3), 16 * (self.round / 3), 10 * self.round, self.display_scroll,
+                    if rand_num == 1: temp_enemy = Enemy(0, 0, (1 * round_speed) + 1, 128, 128, "Monster", 40 * (self.round / 3), 16 * (self.round / 4), 10 * self.round, self.display_scroll,
                                                         self.screen)
-                    if rand_num == 2: temp_enemy = Enemy(0, 0, 1.2 * (self.round / 3), 128, 128, "Skeleton", 30 * (self.round / 3), 10 * (self.round / 3), 12 * self.round, self.display_scroll,
+                    if rand_num == 2: temp_enemy = Enemy(0, 0, (1.1 * round_speed) + 1.1, 128, 128, "Skeleton", 30 * (self.round / 3), 10 * (self.round / 4), 12 * self.round, self.display_scroll,
                                                         self.screen)
-                    if rand_num == 3: temp_enemy = Enemy(0, 0, 0.7 * (self.round / 3), 128, 128, "Hero", 60 * (self.round / 3), 24 * (self.round / 3), 20 * self.round, self.display_scroll,
+                    if rand_num == 3: temp_enemy = Enemy(0, 0, (0.8 * round_speed) + 0.8, 128, 128, "Hero", 60 * (self.round / 3), 24 * (self.round / 4), 20 * self.round, self.display_scroll,
                                                         self.screen)
                     self.enemies.append(temp_enemy)
                     self.counter1 = 0

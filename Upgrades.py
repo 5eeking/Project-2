@@ -46,17 +46,17 @@ class Upgrades:
         if self.chest_type == "Rand":
             rand_upgrade = rand.randint(1, 3)
             if rand_upgrade == 1:
-                self.dmg_up = 3
+                self.dmg_up = 1
             elif rand_upgrade == 2:
-                self.health_up = 10
+                self.health_up = 5
             elif rand_upgrade == 3:
-                self.prot_up = 5
+                self.prot_up = 3
         elif self.chest_type == "Damage":
-            self.dmg_up = 5
+            self.dmg_up = 2
         elif self.chest_type == "Health":
-            self.health_up = 15
+            self.health_up = 7
         elif self.chest_type == "Protection":
-            self.prot_up = 10
+            self.prot_up = 5
 
     def collect(self, player) -> None:
         """

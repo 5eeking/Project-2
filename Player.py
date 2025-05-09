@@ -196,4 +196,4 @@ class Bullet:
         # NOTE: Bullet Movement and Display Section
         # Updates the bullet position and displays it.
         display.blit(self.bullet_sprite, (self.x - 64, self.y - 64))
-        self.x, self.y = self.x + self.unit_vector[0] * 2, self.y + self.unit_vector[1] * 2
+        self.x, self.y = self.x + self.unit_vector[0] * 3, self.y + self.unit_vector[1] * 3

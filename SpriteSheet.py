@@ -15,7 +15,7 @@ class SpriteSheet:
         # Initializes the image.
         self.sheet = image
 
-    def get_image(self, frame = 0, columns = 0, width = 128, height = 128, scale = 1, color = (0, 255, 0)) -> pygame.Surface:
+    def get_image(self, frame = 0, columns = 0, width = 128, height = 128, scale = 1, color = (0, 255, 0)) -> py.Surface:
         """
         Gets the image from the sprite sheet for an animation or sprite.
         Parameters:
