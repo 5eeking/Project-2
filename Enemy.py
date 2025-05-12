@@ -1,5 +1,7 @@
 ### File to create the enemies ###
 
+### Sprites obtained from, https://rgsdev.itch.io/hand-drawn-square-characters-animated-8-directions-top-down-free-cc0 ###
+
 # NOTE: Import Section
 # Imports required modules for the file
 import pygame as py
